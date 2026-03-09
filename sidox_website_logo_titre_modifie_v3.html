@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SIDOX — Formation AutoCAD & Covadis | Topographie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --red:    #E30613;
+      --dark:   #0d1b2a;
+      --navy:   #132338;
+      --blue:   #1a3a5c;
+      --cyan:   #4fc3f7;
+      --white:  #ffffff;
+      --gray:   #f4f6f9;
+      --muted:  #8898aa;
+      --gold:   #f5a623;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      color: #1a1a2e;
+      overflow-x: hidden;
+    }
+
+    /* ─── BLUEPRINT PATTERN ─────────────────────────── */
+    .blueprint-bg {
+      background-color: var(--dark);
+      background-image:
+        linear-gradient(rgba(79,195,247,0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.07) 1px, transparent 1px),
+        linear-gradient(rgba(79,195,247,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.03) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    }
+
+    /* ─── NAVBAR ─────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      background: rgba(13, 27, 42, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--red);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+      box-shadow: 0 4px 20px rgba(227,6,19,0.2);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px; text-decoration: none;
+    }
+
+    .nav-logo-img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      display: block;
+    }
+
+
+    .logo-circle {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 2px solid var(--red);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .logo-circle::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.15) 1px, transparent 1px);
+      background-size: 8px 8px;
+    }
+    .logo-text-inner {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      color: var(--red);
+      letter-spacing: 1px;
+      position: relative; z-index: 1;
+      text-shadow: 0 0 10px rgba(227,6,19,0.5);
+    }
+
+    .brand-name {
+      display: flex; flex-direction: column;
+    }
+    .brand-name span:first-child {
+      font-size: 22px; font-weight: 900;
+      color: var(--white);
+      letter-spacing: 3px;
+      line-height: 1;
+    }
+    .brand-name span:first-child em {
+      color: var(--red); font-style: normal;
+    }
+    .brand-name span:last-child {
+      font-size: 9px; color: var(--cyan);
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: rgba(255,255,255,0.75);
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.5px;
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--red);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      background: var(--red);
+      color: var(--white) !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s !important;
+      box-shadow: 0 4px 15px rgba(227,6,19,0.4);
+    }
+    .nav-cta:hover {
+      background: #c00010 !important;
+      transform: translateY(-2px);
+    }
+    .nav-cta::after { display: none !important; }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      padding: 70px 5% 0;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+    }
+    #hero.blueprint-bg {
+      /* Fond HERO passé en blanc (au lieu du bleu nuit blueprint) */
+      background-color: var(--white);
+      /* Grille très légère (optionnelle) pour garder l'effet "plan" sans bleu nuit */
+      background-image:
+        linear-gradient(rgba(26,58,92,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,58,92,0.06) 1px, transparent 1px),
+        linear-gradient(rgba(26,58,92,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,58,92,0.03) 1px, transparent 1px);
+      background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+    }
+
+    /* Ajustements de lisibilité du texte sur fond blanc (uniquement dans le HERO) */
+    #hero .hero-title { color: var(--dark); }
+    #hero .hero-subtitle { color: rgba(13,27,42,0.75); }
+    #hero .hero-desc { color: rgba(13,27,42,0.65); }
+    #hero .stat-num { color: var(--dark); }
+    #hero .stat-label { color: rgba(13,27,42,0.55); }
+    #hero .btn-outline { color: var(--dark); border-color: rgba(13,27,42,0.25); }
+    #hero .btn-outline:hover { color: var(--blue); border-color: var(--blue); }
+
+    /* Couleurs demandées dans le grand titre (HERO) */
+    #hero .hero-title .hero-white {
+      color: #ffffff;
+      /* Ombre pour rester lisible sur fond très clair */
+      text-shadow: 0 2px 14px rgba(0,0,0,0.35);
+    }
+    #hero .hero-title .hero-black {
+      color: #0d1b2a;
+      -webkit-text-stroke: 0;
+      text-shadow: none;
+    }
+
+
+
+    /* Decorative circles */
+    .hero-deco {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.06;
+      background: radial-gradient(circle, var(--cyan), transparent);
+    }
+    .hero-deco-1 { width: 600px; height: 600px; top: -200px; right: -150px; }
+    .hero-deco-2 { width: 400px; height: 400px; bottom: -100px; left: -100px; }
+
+    /* Animated scanner line */
+    .scanner {
+      position: absolute; left: 0; width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(227,6,19,0.6), transparent);
+      animation: scan 4s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes scan {
+      0% { top: 10%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 90%; opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 650px;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(227,6,19,0.15);
+      border: 1px solid rgba(227,6,19,0.4);
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-badge i { color: var(--red); }
+
+    .hero-title {
+      font-size: clamp(42px, 6vw, 72px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .hero-title .red { color: var(--red); }
+    .hero-title .outline {
+      -webkit-text-stroke: 2px var(--cyan);
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 600;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.8;
+      margin-bottom: 36px;
+      max-width: 520px;
+    }
+
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      margin-bottom: 48px;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.3s;
+      box-shadow: 0 6px 25px rgba(227,6,19,0.45);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(227,6,19,0.6);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-3px);
+    }
+
+    .hero-stats {
+      display: flex; gap: 36px; flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 28px; font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--red); }
+    .stat-label {
+      font-size: 11px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .hero-visual {
+      position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+      width: 420px;
+      z-index: 2;
+    }
+
+    /* Blueprint card mockup */
+    .blueprint-card {
+      background: rgba(19, 35, 56, 0.85);
+      border: 1px solid rgba(79,195,247,0.25);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(79,195,247,0.1);
+      position: relative; overflow: hidden;
+    }
+    .blueprint-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .card-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .card-title {
+      font-size: 13px; font-weight: 700;
+      color: var(--cyan); text-transform: uppercase; letter-spacing: 2px;
+    }
+    .card-status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11px; color: #4caf50;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #4caf50;
+      animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform: scale(1); }
+      50% { opacity:0.5; transform: scale(0.8); }
+    }
+
+    /* Fake CAD drawing */
+    .cad-preview {
+      background: rgba(13, 27, 42, 0.8);
+      border-radius: 10px;
+      border: 1px solid rgba(79,195,247,0.15);
+      height: 180px;
+      position: relative; overflow: hidden;
+      margin-bottom: 20px; z-index: 1;
+    }
+    .cad-preview svg { width: 100%; height: 100%; }
+
+    .progress-section { position: relative; z-index: 1; }
+    .progress-item { margin-bottom: 14px; }
+    .prog-header {
+      display: flex; justify-content: space-between;
+      font-size: 12px; margin-bottom: 6px;
+    }
+    .prog-label { color: rgba(255,255,255,0.7); font-weight: 500; }
+    .prog-pct { color: var(--cyan); font-weight: 700; }
+    .prog-bar {
+      height: 6px; background: rgba(255,255,255,0.08);
+      border-radius: 10px; overflow: hidden;
+    }
+    .prog-fill {
+      height: 100%; border-radius: 10px;
+      position: relative;
+    }
+    .prog-fill.red { background: linear-gradient(90deg, var(--red), #ff4757); }
+    .prog-fill.blue { background: linear-gradient(90deg, var(--cyan), #0288d1); }
+    .prog-fill.gold { background: linear-gradient(90deg, var(--gold), #ffb74d); }
+
+    /* Module cards floating */
+    .float-badge {
+      position: absolute;
+      background: rgba(13,27,42,0.95);
+      border: 1px solid rgba(79,195,247,0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: var(--white);
+      font-weight: 500;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      white-space: nowrap;
+      animation: float 3s ease-in-out infinite;
+      z-index: 3;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .float-badge-1 { top: -20px; right: 30px; animation-delay: 0s; }
+    .float-badge-2 { bottom: 60px; left: -30px; animation-delay: 1.5s; }
+    .float-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .fi-red { background: rgba(227,6,19,0.2); color: var(--red); }
+    .fi-cyan { background: rgba(79,195,247,0.2); color: var(--cyan); }
+
+    /* ─── SECTION GÉNÉRIQUE ──────────────────────────── */
+    section { padding: 90px 5%; }
+
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-tag {
+      display: inline-block;
+      background: rgba(227,6,19,0.1);
+      color: var(--red);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px;
+      border: 1px solid rgba(227,6,19,0.25);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800; color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-title span { color: var(--red); }
+    .section-desc {
+      font-size: 15px; color: var(--muted);
+      max-width: 540px; margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* Divider */
+    .divider {
+      width: 60px; height: 4px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+
+    /* ─── FEATURES STRIP ─────────────────────────────── */
+    #features-strip {
+      background: var(--dark);
+      padding: 28px 5%;
+      border-top: 1px solid rgba(79,195,247,0.1);
+      border-bottom: 1px solid rgba(79,195,247,0.1);
+    }
+    .features-row {
+      display: flex; justify-content: center;
+      gap: 48px; flex-wrap: wrap;
+    }
+    .feat-item {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .feat-item i {
+      color: var(--red); font-size: 18px;
+    }
+    .feat-item span {
+      color: rgba(255,255,255,0.7);
+      font-size: 13px; font-weight: 500;
+    }
+
+    /* ─── COURSES ─────────────────────────────────────── */
+    #courses { background: var(--gray); }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .course-card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .course-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.15);
+    }
+
+    .course-banner {
+      height: 160px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .banner-dark { background: var(--dark); }
+    .banner-navy { background: var(--navy); }
+    .banner-blue { background: var(--blue); }
+
+    .banner-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.1) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    .banner-icon {
+      width: 72px; height: 72px;
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      position: relative; z-index: 1;
+    }
+    .bi-red { background: rgba(227,6,19,0.15); color: var(--red); border: 2px solid rgba(227,6,19,0.3); }
+    .bi-cyan { background: rgba(79,195,247,0.15); color: var(--cyan); border: 2px solid rgba(79,195,247,0.3); }
+    .bi-gold { background: rgba(245,166,35,0.15); color: var(--gold); border: 2px solid rgba(245,166,35,0.3); }
+
+    .course-badge {
+      position: absolute; top: 12px; right: 12px;
+      background: var(--red);
+      color: white; font-size: 10px; font-weight: 700;
+      padding: 4px 10px; border-radius: 20px;
+      letter-spacing: 1px; text-transform: uppercase;
+      z-index: 2;
+    }
+    .badge-free { background: #4caf50; }
+    .badge-new  { background: var(--gold); color: var(--dark); }
+
+    .course-body { padding: 24px; }
+    .course-level {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .lv-green { color: #4caf50; }
+    .lv-blue  { color: var(--cyan); }
+    .lv-gold  { color: var(--gold); }
+
+    .course-title {
+      font-size: 17px; font-weight: 700;
+      color: var(--dark); margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .course-desc {
+      font-size: 13px; color: var(--muted);
+      line-height: 1.7; margin-bottom: 20px;
+    }
+
+    .course-meta {
+      display: flex; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .meta-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--muted);
+    }
+    .meta-item i { color: var(--red); font-size: 11px; }
+
+    .course-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid #f0f0f0;
+    }
+    .course-price { font-size: 22px; font-weight: 800; color: var(--dark); }
+    .course-price .free { color: #4caf50; font-size: 16px; }
+    .course-price sup { font-size: 13px; color: var(--muted); }
+
+    .btn-course {
+      background: var(--dark);
+      color: white; font-size: 12px; font-weight: 600;
+      padding: 10px 20px; border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-course:hover { background: var(--red); }
+
+    /* ─── MODULES ACCORDION ───────────────────────────── */
+    #modules { background: var(--white); }
+
+    .modules-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start;
+    }
+
+    .module-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .module-item {
+      background: var(--gray);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .module-item.active { border-color: var(--red); }
+
+    .module-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px;
+      cursor: pointer;
+    }
+
+    .module-num {
+      width: 36px; height: 36px; min-width: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+    }
+    .mn-red  { background: rgba(227,6,19,0.1);  color: var(--red); }
+    .mn-cyan { background: rgba(79,195,247,0.1); color: var(--cyan); }
+    .mn-gold { background: rgba(245,166,35,0.1); color: var(--gold); }
+    .mn-green{ background: rgba(76,175,80,0.1);  color: #4caf50; }
+
+    .module-info { flex: 1; }
+    .module-name { font-size: 14px; font-weight: 700; color: var(--dark); }
+    .module-count { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .module-arrow { color: var(--muted); font-size: 12px; transition: transform 0.3s; }
+    .module-item.active .module-arrow { transform: rotate(90deg); color: var(--red); }
+
+    .module-lessons {
+      display: none; padding: 0 20px 16px;
+    }
+    .module-item.active .module-lessons { display: block; }
+    .lesson-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed rgba(0,0,0,0.06);
+      font-size: 13px; color: var(--muted);
+    }
+    .lesson-row:last-child { border-bottom: none; }
+    .lesson-row i { color: var(--red); font-size: 10px; }
+    .lesson-row span { color: #555; }
+
+    /* Right panel */
+    .modules-panel {
+      background: var(--dark);
+      border-radius: 20px;
+      padding: 32px;
+      position: sticky; top: 90px;
+    }
+    .panel-title {
+      font-size: 20px; font-weight: 800;
+      color: var(--white); margin-bottom: 8px;
+    }
+    .panel-title span { color: var(--red); }
+    .panel-sub {
+      font-size: 13px; color: var(--muted); margin-bottom: 28px;
+    }
+
+    .outcome-list { list-style: none; margin-bottom: 28px; }
+    .outcome-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 13px; color: rgba(255,255,255,0.7);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .outcome-list li:last-child { border-bottom: none; }
+    .outcome-list li i { color: var(--red); margin-top: 2px; font-size: 11px; }
+
+    .panel-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 28px;
+    }
+    .pstat {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px; padding: 14px;
+      text-align: center;
+    }
+    .pstat-num {
+      font-size: 22px; font-weight: 800; color: var(--white);
+    }
+    .pstat-num span { color: var(--red); }
+    .pstat-label { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+    .btn-enroll {
+      display: block; width: 100%;
+      background: var(--red);
+      color: white; text-align: center;
+      padding: 14px; border-radius: 10px;
+      font-weight: 700; font-size: 14px;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 6px 20px rgba(227,6,19,0.4);
+    }
+    .btn-enroll:hover {
+      background: #c00010;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(227,6,19,0.5);
+    }
+
+    /* ─── ABOUT ────────────────────────────────────────── */
+    #about { background: var(--gray); }
+
+    .about-layout {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    /* TikTok-style profile card */
+    .profile-card {
+      background: var(--dark);
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+      position: relative; overflow: hidden;
+      border: 1px solid rgba(79,195,247,0.15);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .profile-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.04) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .profile-avatar {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: var(--navy);
+      border: 4px solid var(--red);
+      margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(227,6,19,0.4);
+    }
+    .avatar-inner {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      background: var(--navy);
+      position: relative; overflow: hidden;
+    }
+    .avatar-inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.1) 1px, transparent 1px);
+      background-size: 12px 12px;
+    }
+    .avatar-sidox {
+      font-size: 22px; font-weight: 900;
+      color: var(--red); position: relative; z-index: 1;
+      letter-spacing: 1px;
+      text-shadow: 0 0 15px rgba(227,6,19,0.7);
+    }
+    .avatar-sub {
+      font-size: 7px; color: rgba(255,255,255,0.6);
+      letter-spacing: 1px; position: relative; z-index: 1;
+      margin-top: 2px;
+    }
+
+    .profile-name {
+      font-size: 22px; font-weight: 800;
+      color: white; position: relative; z-index: 1;
+      margin-bottom: 4px;
+    }
+    .profile-name span { color: var(--red); }
+    .profile-handle {
+      font-size: 13px; color: var(--muted); margin-bottom: 8px;
+      position: relative; z-index: 1;
+    }
+    .profile-arabic {
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px; color: var(--cyan);
+      margin-bottom: 24px; position: relative; z-index: 1;
+    }
+
+    .profile-stats-row {
+      display: flex; justify-content: center; gap: 32px;
+      margin-bottom: 24px; position: relative; z-index: 1;
+    }
+    .ps-item { text-align: center; }
+    .ps-num { font-size: 20px; font-weight: 800; color: white; }
+    .ps-num span { color: var(--red); }
+    .ps-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+    .profile-tags {
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .profile-tag {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      padding: 5px 12px; border-radius: 20px;
+      font-size: 11px;
+    }
+
+    .about-floating {
+      position: absolute; right: -20px; top: 30px;
+      background: var(--red);
+      color: white; padding: 12px 16px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(227,6,19,0.5);
+      z-index: 3;
+    }
+    .af-num { font-size: 22px; font-weight: 800; }
+    .af-txt { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* About text */
+    .about-content {}
+    .about-tag {
+      display: inline-block;
+      background: rgba(227,6,19,0.1);
+      color: var(--red);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px;
+      border: 1px solid rgba(227,6,19,0.25);
+      margin-bottom: 20px;
+    }
+    .about-title {
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 800; color: var(--dark);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .about-title span { color: var(--red); }
+    .about-text {
+      font-size: 14px; color: #555;
+      line-height: 1.9; margin-bottom: 20px;
+    }
+    .about-arabic {
+      font-family: 'Cairo', sans-serif;
+      font-size: 15px; color: #444;
+      line-height: 1.9; margin-bottom: 32px;
+      direction: rtl; text-align: right;
+      background: rgba(227,6,19,0.04);
+      border-right: 3px solid var(--red);
+      padding: 16px 16px 16px 12px;
+      border-radius: 0 8px 8px 0;
+    }
+    .skills-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-bottom: 32px;
+    }
+    .skill-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; color: #444;
+    }
+    .skill-item i { color: var(--red); font-size: 12px; }
+
+    .social-links {
+      display: flex; gap: 12px;
+    }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 18px; border-radius: 8px;
+      font-size: 12px; font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .sb-tiktok { background: #010101; color: white; }
+    .sb-tiktok:hover { background: #1a1a1a; transform: translateY(-2px); }
+    .sb-telegram { background: #2CA5E0; color: white; }
+    .sb-telegram:hover { background: #1d94cf; transform: translateY(-2px); }
+
+    /* ─── TESTIMONIALS ────────────────────────────────── */
+    #testimonials { background: var(--dark); }
+    #testimonials .section-title { color: white; }
+    #testimonials .section-desc { color: var(--muted); }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .testi-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .testi-card:hover {
+      border-color: rgba(227,6,19,0.3);
+      transform: translateY(-4px);
+    }
+
+    .stars {
+      color: var(--gold); font-size: 13px; margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    .testi-text {
+      font-size: 13px; color: rgba(255,255,255,0.65);
+      line-height: 1.8; margin-bottom: 20px;
+      font-style: italic;
+    }
+    .testi-author {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), var(--navy));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; color: white;
+      flex-shrink: 0;
+    }
+    .testi-name { font-size: 13px; font-weight: 700; color: white; }
+    .testi-role { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .testi-flag { font-size: 16px; }
+
+    /* ─── PRICING ──────────────────────────────────────── */
+    #pricing { background: var(--white); }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px; max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .price-card {
+      border-radius: 20px;
+      padding: 36px 28px;
+      border: 2px solid #eee;
+      transition: all 0.3s;
+      text-align: center;
+      position: relative;
+    }
+    .price-card:hover { transform: translateY(-8px); }
+    .price-card.featured {
+      border-color: var(--red);
+      background: var(--dark);
+      box-shadow: 0 20px 60px rgba(227,6,19,0.2);
+      transform: scale(1.05);
+    }
+    .price-card.featured:hover { transform: scale(1.05) translateY(-8px); }
+
+    .featured-badge {
+      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+      background: var(--red);
+      color: white; font-size: 10px; font-weight: 700;
+      padding: 5px 16px; border-radius: 20px;
+      letter-spacing: 2px; text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .plan-name { font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 24px; color: var(--muted); }
+    .price-card.featured .plan-name { color: var(--cyan); }
+    .plan-price { font-size: 44px; font-weight: 900; color: var(--dark); line-height: 1; margin-bottom: 4px; }
+    .price-card.featured .plan-price { color: white; }
+    .plan-price span { font-size: 18px; font-weight: 500; color: var(--muted); }
+    .plan-desc { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+
+    .plan-features { list-style: none; margin-bottom: 32px; text-align: left; }
+    .plan-features li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; padding: 9px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .price-card.featured .plan-features li { border-color: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); }
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li i { color: var(--red); font-size: 11px; flex-shrink: 0; }
+
+    .btn-plan {
+      display: block; width: 100%;
+      padding: 13px; border-radius: 10px;
+      font-weight: 700; font-size: 13px;
+      text-decoration: none; text-align: center;
+      transition: all 0.3s;
+    }
+    .btn-plan-outline {
+      border: 2px solid #ddd;
+      color: var(--dark);
+    }
+    .btn-plan-outline:hover { border-color: var(--red); color: var(--red); }
+    .btn-plan-filled {
+      background: var(--red); color: white;
+      box-shadow: 0 6px 20px rgba(227,6,19,0.4);
+    }
+    .btn-plan-filled:hover {
+      background: #c00010;
+      box-shadow: 0 10px 30px rgba(227,6,19,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ─── NEWSLETTER ──────────────────────────────────── */
+    #newsletter {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--blue) 100%);
+      padding: 70px 5%;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #newsletter::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,247,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,247,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .nl-title {
+      font-size: clamp(28px, 4vw, 40px); font-weight: 800;
+      color: white; margin-bottom: 12px;
+      position: relative; z-index: 1;
+    }
+    .nl-title span { color: var(--red); }
+    .nl-sub {
+      font-size: 15px; color: rgba(255,255,255,0.6);
+      margin-bottom: 36px;
+      position: relative; z-index: 1;
+    }
+    .nl-form {
+      display: flex; gap: 12px;
+      max-width: 480px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .nl-input {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 14px 20px;
+      color: white; font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .nl-input::placeholder { color: rgba(255,255,255,0.4); }
+    .nl-input:focus { border-color: var(--red); }
+    .nl-btn {
+      background: var(--red); color: white;
+      border: none; cursor: pointer;
+      padding: 14px 28px; border-radius: 10px;
+      font-weight: 700; font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .nl-btn:hover { background: #c00010; transform: translateY(-2px); }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: #060d14;
+      padding: 60px 5% 30px;
+      border-top: 1px solid rgba(227,6,19,0.2);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+
+    .footer-brand {}
+    .footer-logo {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .footer-brand-name { font-size: 24px; font-weight: 900; color: white; letter-spacing: 3px; }
+    .footer-brand-name span { color: var(--red); }
+    .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; max-width: 280px; }
+    .footer-social { display: flex; gap: 10px; }
+    .fsoc {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .fsoc-tt { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
+    .fsoc-tt:hover { background: #010101; color: white; }
+    .fsoc-tg { background: rgba(44,165,224,0.1); color: #2CA5E0; }
+    .fsoc-tg:hover { background: #2CA5E0; color: white; }
+    .fsoc-yt { background: rgba(255,0,0,0.1); color: #FF0000; }
+    .fsoc-yt:hover { background: #FF0000; color: white; }
+
+    .footer-col h4 {
+      font-size: 13px; font-weight: 700;
+      color: white; text-transform: uppercase;
+      letter-spacing: 2px; margin-bottom: 20px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 12px; }
+    .footer-links a {
+      font-size: 13px; color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .footer-links a::before {
+      content: '→';
+      color: var(--red); font-size: 10px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .footer-links a:hover { color: white; padding-left: 4px; }
+    .footer-links a:hover::before { opacity: 1; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy {
+      font-size: 12px; color: var(--muted);
+    }
+    .footer-copy span { color: var(--red); }
+    .footer-flag { font-size: 20px; }
+
+    /* ─── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .courses-grid { grid-template-columns: repeat(2, 1fr); }
+      .modules-layout { grid-template-columns: 1fr; }
+      .modules-panel { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .hero-visual { display: none; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .courses-grid { grid-template-columns: 1fr; }
+      .about-layout { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.featured { transform: scale(1); }
+      .footer-top { grid-template-columns: 1fr; }
+      .nl-form { flex-direction: column; }
+    }
+  </style>
+<style>
+/* Premium highlight */
+.premium-gold{color:#D4AF37;font-weight:700;letter-spacing:0.2px;text-shadow:0 1px 0 rgba(0,0,0,.15);}
+</style>
+<style>
+/* Requested text colors */
+.text-black{color:#000000;text-shadow:none;-webkit-text-stroke:0;}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══════════════════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img class="nav-logo-img" src="https://www.genspark.ai/api/files/s/xgtlbd2s" alt="SIDOX logo" />
+    <div class="brand-name">
+      <span>SID<em>OX</em></span>
+      <span>AutoCAD &amp; Covadis</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#courses">Formations</a></li>
+    <li><a href="#modules">Programme</a></li>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#testimonials">Avis</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+    <li><a href="#newsletter" class="nav-cta">S'inscrire gratuitement</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ══════════════════════════════════════════════ -->
+<section id="hero" class="blueprint-bg">
+  <div class="scanner"></div>
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <i class="fas fa-map-marked-alt"></i>
+      Plateforme de Formation Topographie N°1
+    </div>
+
+    <h1 class="hero-title">
+      <span class="text-black">Maîtrisez</span><br/>
+      <span class="red">AutoCAD</span> &amp;<br/>
+      <span class="red">Covadis</span>
+    </h1>
+
+    <p class="hero-subtitle">للمبتدئين في برامج الطبوغرافيا — Pour les Débutants</p>
+
+    <p class="hero-desc">
+      Des formations complètes, simples et professionnelles pour maîtriser
+      AutoCAD et Covadis dans le domaine de la topographie.
+      Apprenez à votre rythme, avec des exercices pratiques réels.
+    </p>
+
+    <div class="hero-btns">
+      <a href="#courses" class="btn-primary">
+        <i class="fas fa-play-circle"></i>
+        Commencer Maintenant
+      </a>
+      <a href="#modules" class="btn-outline">
+        <i class="fas fa-book-open"></i>
+        Voir le Programme
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">16<span>.5K</span></div>
+        <div class="stat-label">Abonnés TikTok</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">58<span>.3K</span></div>
+        <div class="stat-label">Likes Totaux</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Modules Complets</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">Pratique Réelle</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blueprint Card Visual -->
+  <div class="hero-visual">
+    <div class="float-badge float-badge-1">
+      <div class="float-icon fi-red"><i class="fas fa-drafting-compass"></i></div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:white;">AutoCAD 2025</div>
+        <div style="font-size:10px;color:#8898aa;">Nouveau module</div>
+      </div>
+    </div>
+
+    <div class="blueprint-card">
+      <div class="card-header">
+        <div class="card-title"><i class="fas fa-layer-group"></i> &nbsp;Tableau de bord</div>
+        <div class="card-status">
+          <div class="dot"></div>
+          En cours
+        </div>
+      </div>
+
+      <div class="cad-preview">
+        <!-- SVG topographic lines simulation -->
+        <svg viewBox="0 0 380 180" xmlns="http://www.w3.org/2000/svg">
+          <!-- Grid -->
+          <defs>
+            <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+              <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(79,195,247,0.1)" stroke-width="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="380" height="180" fill="url(#grid)"/>
+
+          <!-- Topographic contour lines -->
+          <path d="M 20,120 Q 60,90 100,110 Q 140,130 180,100 Q 220,70 260,90 Q 300,110 340,80 L 360,85"
+                fill="none" stroke="rgba(79,195,247,0.6)" stroke-width="1.5"/>
+          <path d="M 20,100 Q 60,70 110,90 Q 160,110 200,80 Q 240,50 280,70 Q 320,90 360,60"
+                fill="none" stroke="rgba(79,195,247,0.45)" stroke-width="1"/>
+          <path d="M 30,140 Q 80,115 130,130 Q 180,145 230,115 Q 280,85 340,105 L 360,110"
+                fill="none" stroke="rgba(79,195,247,0.35)" stroke-width="1"/>
+          <path d="M 20,80 Q 70,50 120,68 Q 175,88 220,58 Q 265,30 310,50 Q 345,65 360,40"
+                fill="none" stroke="rgba(79,195,247,0.3)" stroke-width="0.8"/>
+
+          <!-- Points topographiques -->
+          <circle cx="100" cy="110" r="3" fill="#E30613"/>
+          <circle cx="180" cy="100" r="3" fill="#E30613"/>
+          <circle cx="260" cy="90"  r="3" fill="#E30613"/>
+          <circle cx="200" cy="80"  r="2" fill="rgba(79,195,247,0.8)"/>
+          <circle cx="140" cy="130" r="2" fill="rgba(79,195,247,0.8)"/>
+          <circle cx="300" cy="70"  r="2" fill="rgba(79,195,247,0.8)"/>
+
+          <!-- Polylines du plan -->
+          <rect x="40"  y="30"  width="70" height="50" fill="none" stroke="rgba(245,166,35,0.5)" stroke-width="1" stroke-dasharray="4,2"/>
+          <rect x="160" y="20"  width="90" height="45" fill="none" stroke="rgba(245,166,35,0.5)" stroke-width="1" stroke-dasharray="4,2"/>
+
+          <!-- Labels -->
+          <text x="52"  y="65" fill="rgba(79,195,247,0.7)" font-size="8" font-family="monospace">BÂTIMENT A</text>
+          <text x="172" y="52" fill="rgba(79,195,247,0.7)" font-size="8" font-family="monospace">BÂTIMENT B</text>
+
+          <!-- Altitude labels -->
+          <text x="95"  y="106" fill="#E30613" font-size="7" font-family="monospace">Z=142.5</text>
+          <text x="175" y="96"  fill="#E30613" font-size="7" font-family="monospace">Z=138.2</text>
+          <text x="255" y="86"  fill="#E30613" font-size="7" font-family="monospace">Z=145.8</text>
+
+          <!-- North arrow -->
+          <text x="335" y="165" fill="rgba(79,195,247,0.5)" font-size="10" font-family="monospace">N ↑</text>
+          <!-- Scale bar -->
+          <line x1="30" y1="165" x2="100" y2="165" stroke="rgba(79,195,247,0.4)" stroke-width="1"/>
+          <text x="32" y="173" fill="rgba(79,195,247,0.4)" font-size="7" font-family="monospace">0     50m</text>
+        </svg>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-item">
+          <div class="prog-header">
+            <span class="prog-label">AutoCAD 2D</span>
+            <span class="prog-pct">85%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill red" style="width:85%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="prog-header">
+            <span class="prog-label">Covadis 2D</span>
+            <span class="prog-pct">62%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill blue" style="width:62%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="prog-header">
+            <span class="prog-label">Covadis 3D</span>
+            <span class="prog-pct">40%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill gold" style="width:40%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="float-badge float-badge-2">
+      <div class="float-icon fi-cyan"><i class="fas fa-mountain"></i></div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:white;">MNT Calculé</div>
+        <div style="font-size:10px;color:#4caf50;">✓ Succès</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES STRIP ════════════════════════════════════ -->
+<div id="features-strip">
+  <div class="features-row">
+    <div class="feat-item"><i class="fas fa-play-circle"></i><span>Formation Vidéo HD</span></div>
+    <div class="feat-item"><i class="fas fa-file-download"></i><span>Fichiers DWG inclus</span></div>
+    <div class="feat-item"><i class="fas fa-comments"></i><span>Support Telegram</span></div>
+    <div class="feat-item"><i class="fas fa-infinity"></i><span>Accès à vie</span></div>
+    <div class="feat-item"><i class="fab fa-tiktok"></i><span>Communauté 16.5K</span></div>
+  </div>
+</div>
+
+<!-- ═══ COURSES ═══════════════════════════════════════════ -->
+<section id="courses">
+  <div class="section-header">
+    <div class="section-tag">🎓 Nos Formations</div>
+    <h2 class="section-title">Choisissez votre <span>parcours</span></h2>
+    <p class="section-desc">
+      Des formations structurées, du débutant absolu jusqu'au niveau professionnel.
+      Chaque module est accompagné de fichiers pratiques téléchargeables.
+    </p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="courses-grid">
+
+    <!-- Carte 1 -->
+    <div class="course-card">
+      <div class="course-banner banner-dark">
+        <div class="banner-grid"></div>
+        <div class="banner-icon bi-cyan"><i class="fas fa-compass"></i></div>
+        <div class="course-badge badge-free">Gratuit</div>
+      </div>
+      <div class="course-body">
+        <div class="course-level lv-green">● Débutant Absolu</div>
+        <div class="course-title">Introduction à la Topographie</div>
+        <div class="course-desc">
+          Apprenez les bases fondamentales : instruments, coordonnées, altimétrie, planimétrie et notions essentielles avant de démarrer AutoCAD.
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="fas fa-play-circle"></i> 12 leçons</div>
+          <div class="meta-item"><i class="fas fa-clock"></i> 3h 20min</div>
+          <div class="meta-item"><i class="fas fa-users"></i> 1.2K inscrits</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-price"><span class="free">GRATUIT</span></div>
+          <a href="#" class="btn-course"><i class="fas fa-arrow-right"></i> Démarrer</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 2 -->
+    <div class="course-card">
+      <div class="course-banner banner-navy">
+        <div class="banner-grid"></div>
+        <div class="banner-icon bi-red"><i class="fas fa-drafting-compass"></i></div>
+        <div class="course-badge">Populaire</div>
+      </div>
+      <div class="course-body">
+        <div class="course-level lv-blue">● Débutant</div>
+        <div class="course-title">AutoCAD pour la Topographie</div>
+        <div class="course-desc">
+          <span class="premium-gold">Maîtrisez</span> AutoCAD de zéro : interface, commandes de base, calques, coordonnées 3D, impression de plans et import de données topo.
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="fas fa-play-circle"></i> 28 leçons</div>
+          <div class="meta-item"><i class="fas fa-clock"></i> 8h 45min</div>
+          <div class="meta-item"><i class="fas fa-users"></i> 980 inscrits</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-price"><sup>DZD </sup>2500</div>
+          <a href="#" class="btn-course"><i class="fas fa-arrow-right"></i> S'inscrire</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 3 -->
+    <div class="course-card">
+      <div class="course-banner banner-blue">
+        <div class="banner-grid"></div>
+        <div class="banner-icon bi-gold"><i class="fas fa-map"></i></div>
+        <div class="course-badge badge-new">Nouveau</div>
+      </div>
+      <div class="course-body">
+        <div class="course-level lv-gold">● Intermédiaire</div>
+        <div class="course-title">Covadis 2D — Plans Topographiques</div>
+        <div class="course-desc">
+          Import des carnets de levé, gestion des points, géocodification, calcul de polygonales, réseaux VRD, métrés et plan de masse complet.
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="fas fa-play-circle"></i> 32 leçons</div>
+          <div class="meta-item"><i class="fas fa-clock"></i> 10h 15min</div>
+          <div class="meta-item"><i class="fas fa-users"></i> 720 inscrits</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-price"><sup>DZD </sup>3500</div>
+          <a href="#" class="btn-course"><i class="fas fa-arrow-right"></i> S'inscrire</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 4 -->
+    <div class="course-card">
+      <div class="course-banner banner-dark">
+        <div class="banner-grid"></div>
+        <div class="banner-icon bi-red"><i class="fas fa-mountain"></i></div>
+      </div>
+      <div class="course-body">
+        <div class="course-level lv-gold">● Avancé</div>
+        <div class="course-title">Covadis 3D — MNT & Projets</div>
+        <div class="course-desc">
+          Modèles numériques de terrain, courbes de niveau, profils en long et en travers, cubatures déblai/remblai et projets routiers Autopiste.
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="fas fa-play-circle"></i> 38 leçons</div>
+          <div class="meta-item"><i class="fas fa-clock"></i> 12h 30min</div>
+          <div class="meta-item"><i class="fas fa-users"></i> 540 inscrits</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-price"><sup>DZD </sup>4500</div>
+          <a href="#" class="btn-course"><i class="fas fa-arrow-right"></i> S'inscrire</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 5 -->
+    <div class="course-card">
+      <div class="course-banner banner-navy">
+        <div class="banner-grid"></div>
+        <div class="banner-icon bi-cyan"><i class="fas fa-road"></i></div>
+      </div>
+      <div class="course-body">
+        <div class="course-level lv-blue">● Professionnel</div>
+        <div class="course-title">Projets VRD Complets</div>
+        <div class="course-desc">
+          Études de cas réels : lotissement urbain, route secondaire, aménagement de bassin versant. Fichiers DWG professionnels inclus.
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="fas fa-play-circle"></i> 20 leçons</div>
+          <div class="meta-item"><i class="fas fa-clock"></i> 7h 00min</div>
+          <div class="meta-item"><i class="fas fa-users"></i> 310 inscrits</div>
+        </div>
+        <div class="course-footer">
+          <div class="course-price"><sup>DZD </sup>3000</div>
+          <a href="#" class="btn-course"><i class="fas fa-arrow-right"></i> S'inscrire</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carte 6 — Pack Complet -->
+    <div class="course-card" style="border:2px solid var(--red);background:linear-gradient(135deg,#fff8f8,#fff);">
+      <div class="course-banner" style="background:linear-gradient(135deg,var(--dark),var(--blue));">
+        <div class="banner-grid"></div>
+        <div class="banner-icon" style="background:rgba(227,6,19,0.2);color:var(--red);border:2px solid rgba(227,6,19,0.4);font-size:28px;">
+          <i class="fas fa-star"></i>
+        </div>
+        <div class="course-badge" style="background:linear-gradient(135deg,#f5a623,#ff6b35);">Pack COMPLET</div>
+      </div>
+      <div class="course-body">
+        <div class="course-level" style="color:var(--red);">★ Tous niveaux confondus</div>
+        <div class="course-title">Pack SIDOX — Formation Complète</div>
+        <div class="course-desc">
+          Tous les modules + projets pratiques + accès à la communauté Telegram + support prioritaire + mises à jour gratuites à vie.
+        </div>
+        <div class="course-meta">
+          <div class="meta-item"><i class="fas fa-play-circle"></i> 130+ leçons</div>
+          <div class="meta-item"><i class="fas fa-clock"></i> 42h+</div>
+          <div class="meta-item"><i class="fas fa-infinity"></i> Accès vie</div>
+        </div>
+        <div class="course-footer">
+          <div>
+            <div style="font-size:11px;color:var(--muted);text-decoration:line-through;">DZD 13500</div>
+            <div class="course-price" style="color:var(--red);"><sup>DZD </sup>8900</div>
+          </div>
+          <a href="#" class="btn-course" style="background:var(--red);">
+            <i class="fas fa-crown"></i> Pack Premium
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ MODULES ════════════════════════════════════════════ -->
+<section id="modules">
+  <div class="section-header">
+    <div class="section-tag">📚 Programme Détaillé</div>
+    <h2 class="section-title">Contenu des <span>formations</span></h2>
+    <p class="section-desc">
+      Un parcours progressif et structuré, du débutant absolu au niveau professionnel.
+    </p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="modules-layout">
+    <div class="module-list">
+
+      <div class="module-item active">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="module-num mn-red">00</div>
+          <div class="module-info">
+            <div class="module-name">Introduction à la Topographie</div>
+            <div class="module-count">12 leçons • 3h 20min</div>
+          </div>
+          <i class="fas fa-chevron-right module-arrow"></i>
+        </div>
+        <div class="module-lessons">
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Qu'est-ce que la topographie ?</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Les instruments topographiques</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Coordonnées et systèmes de référence</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Notions d'altimétrie et planimétrie</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Présentation d'AutoCAD & Covadis</span></div>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="module-num mn-cyan">01</div>
+          <div class="module-info">
+            <div class="module-name">AutoCAD — Bases & Interface</div>
+            <div class="module-count">16 leçons • 5h 10min</div>
+          </div>
+          <i class="fas fa-chevron-right module-arrow"></i>
+        </div>
+        <div class="module-lessons">
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Installation et paramétrage</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Interface et raccourcis clavier</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Commandes LINE, CIRCLE, ARC</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Gestion des calques (Layers)</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Mise en page et impression</span></div>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="module-num mn-gold">02</div>
+          <div class="module-info">
+            <div class="module-name">AutoCAD — Topographie Avancée</div>
+            <div class="module-count">12 leçons • 3h 35min</div>
+          </div>
+          <i class="fas fa-chevron-right module-arrow"></i>
+        </div>
+        <div class="module-lessons">
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Coordonnées 2D et 3D</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Import fichiers CSV/TXT</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Textes, cotations, nomenclature</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Exercice : Plan de terrain complet</span></div>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="module-num mn-cyan">03</div>
+          <div class="module-info">
+            <div class="module-name">Covadis 2D — Plans Topographiques</div>
+            <div class="module-count">18 leçons • 6h 00min</div>
+          </div>
+          <i class="fas fa-chevron-right module-arrow"></i>
+        </div>
+        <div class="module-lessons">
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Interface Covadis & menus</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Import carnets de levé (.txt, .gsi)</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Géocodification des points</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Calcul de polygonales</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Réseaux VRD & métrés</span></div>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="module-num mn-red">04</div>
+          <div class="module-info">
+            <div class="module-name">Covadis 3D — MNT & Cubatures</div>
+            <div class="module-count">20 leçons • 7h 30min</div>
+          </div>
+          <i class="fas fa-chevron-right module-arrow"></i>
+        </div>
+        <div class="module-lessons">
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Création du MNT (Modèle Numérique)</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Courbes de niveau automatiques</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Profils en long et en travers</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Calcul déblais/remblais (cubatures)</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Projet routier avec Autopiste</span></div>
+        </div>
+      </div>
+
+      <div class="module-item">
+        <div class="module-header" onclick="this.parentElement.classList.toggle('active')">
+          <div class="module-num mn-green">05</div>
+          <div class="module-info">
+            <div class="module-name">Projets Réels & Études de Cas</div>
+            <div class="module-count">14 leçons • 5h 00min</div>
+          </div>
+          <i class="fas fa-chevron-right module-arrow"></i>
+        </div>
+        <div class="module-lessons">
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Étude de cas : Levé parcelle agricole</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Étude de cas : Projet route secondaire</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Étude de cas : Lotissement urbain</span></div>
+          <div class="lesson-row"><i class="fas fa-circle"></i><span>Rendu professionnel & livrable final</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sticky Panel -->
+    <div class="modules-panel">
+      <div class="panel-title">Ce que vous allez <span>apprendre</span></div>
+      <div class="panel-sub">Compétences acquises à l'issue de la formation complète</div>
+
+      <ul class="outcome-list">
+        <li><i class="fas fa-check-circle"></i>Réaliser des plans topographiques 2D professionnels</li>
+        <li><i class="fas fa-check-circle"></i>Importer et traiter des carnets de levé terrain</li>
+        <li><i class="fas fa-check-circle"></i>Créer un MNT et calculer des courbes de niveau</li>
+        <li><i class="fas fa-check-circle"></i>Calculer des cubatures déblai/remblai précises</li>
+        <li><i class="fas fa-check-circle"></i>Concevoir des projets routiers avec Autopiste</li>
+        <li><i class="fas fa-check-circle"></i>Réaliser des projets VRD complets</li>
+        <li><i class="fas fa-check-circle"></i>Maîtriser l'interface AutoCAD pour la topo</li>
+        <li><i class="fas fa-check-circle"></i>Produire des livrables professionnels</li>
+      </ul>
+
+      <div class="panel-stats">
+        <div class="pstat">
+          <div class="pstat-num">130<span>+</span></div>
+          <div class="pstat-label">Leçons Vidéo</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">42<span>h</span></div>
+          <div class="pstat-label">Contenu Total</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">50<span>+</span></div>
+          <div class="pstat-label">Fichiers DWG</div>
+        </div>
+        <div class="pstat">
+          <div class="pstat-num">∞</div>
+          <div class="pstat-label">Accès à vie</div>
+        </div>
+      </div>
+
+      <a href="#pricing" class="btn-enroll">
+        <i class="fas fa-graduation-cap"></i> &nbsp; Accéder aux formations
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ══════════════════════════════════════════════ -->
+<section id="about">
+  <div class="about-layout">
+
+    <div class="about-visual">
+      <div class="profile-card">
+        <div class="profile-avatar">
+          <div class="avatar-inner">
+            <span class="avatar-sidox">SIDOX</span>
+            <span class="avatar-sub">AutoCAD · Covadis</span>
+          </div>
+        </div>
+
+        <div class="profile-name">SID<span>OX</span></div>
+        <div class="profile-handle">@d.sidox</div>
+        <div class="profile-arabic">🇩🇿 للمحتوى التعليمي</div>
+
+        <div class="profile-stats-row">
+          <div class="ps-item">
+            <div class="ps-num">16<span>.5K</span></div>
+            <div class="ps-label">Followers</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-num">58<span>.3K</span></div>
+            <div class="ps-label">Likes</div>
+          </div>
+          <div class="ps-item">
+            <div class="ps-num">74<span>M</span></div>
+            <div class="ps-label">Vues</div>
+          </div>
+        </div>
+
+        <div class="profile-tags">
+          <span class="profile-tag">🗺️ Topographie</span>
+          <span class="profile-tag">✏️ AutoCAD</span>
+          <span class="profile-tag">🌐 Covadis</span>
+          <span class="profile-tag">🇩🇿 Algérie</span>
+          <span class="profile-tag">📐 Géomètre</span>
+        </div>
+      </div>
+
+      <div class="about-floating">
+        <div class="af-num">74M</div>
+        <div class="af-txt">Vues TikTok</div>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <div class="about-tag">👤 À Propos</div>
+      <h2 class="about-title">
+        La plateforme <span>SIDOX</span><br/>
+        pour les topographes
+      </h2>
+      <p class="about-text">
+        SIDOX est une plateforme éducative fondée par un passionné de topographie et de DAO (Dessin Assisté par Ordinateur),
+        spécialisée dans l'enseignement d'AutoCAD et Covadis pour les débutants et les professionnels en formation.
+      </p>
+      <p class="about-text">
+        Avec plus de <strong>16 500 abonnés</strong> sur TikTok et plus de <strong>74 millions de vues</strong>,
+        SIDOX est devenu la référence francophone et arabophone pour apprendre la topographie numérique de manière simple, pratique et efficace.
+      </p>
+      <div class="about-arabic">
+        أقوم بدروس بسيطة للمبتدئين في أساسيات AutoCAD et Covadis —
+        دروس مجانية مبسطة مع شرح لكل مبتدأ حتى يتمكن من تطوير نفسه في برنامج الهندسة
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-item"><i class="fas fa-check"></i>Topographie terrain & bureau</div>
+        <div class="skill-item"><i class="fas fa-check"></i>AutoCAD 2D & 3D</div>
+        <div class="skill-item"><i class="fas fa-check"></i>Covadis 2D & 3D</div>
+        <div class="skill-item"><i class="fas fa-check"></i>Modèles Numériques de Terrain</div>
+        <div class="skill-item"><i class="fas fa-check"></i>Projets routiers (Autopiste)</div>
+        <div class="skill-item"><i class="fas fa-check"></i>VRD & aménagement urbain</div>
+      </div>
+
+      <div class="social-links">
+        <a href="https://www.tiktok.com/@d.sidox" target="_blank" class="social-btn sb-tiktok">
+          <i class="fab fa-tiktok"></i> TikTok @d.sidox
+        </a>
+        <a href="https://solo.to/sidox" target="_blank" class="social-btn sb-telegram">
+          <i class="fas fa-link"></i> Tous les liens
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ══════════════════════════════════════ -->
+<section id="testimonials" class="blueprint-bg">
+  <div class="section-header">
+    <div class="section-tag" style="background:rgba(227,6,19,0.15);border-color:rgba(227,6,19,0.3);">⭐ Avis des Apprenants</div>
+    <h2 class="section-title" style="color:white;">Ce que disent nos <span>étudiants</span></h2>
+    <p class="section-desc">Rejoignez des milliers d'apprenants qui ont transformé leur carrière avec SIDOX.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "J'ai appris Covadis en 3 semaines grâce à SIDOX. Les explications sont ultra claires, les fichiers d'exercices sont vraiment utiles. Je recommande à 1000% !"
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Ahmed B. <span class="testi-flag">🇩🇿</span></div>
+          <div class="testi-role">Technicien géomètre, Alger</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card" style="border-color:rgba(227,6,19,0.3);">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "Enfin une formation AutoCAD topographie en arabe et français ! J'ai fait tous les modules et je peux maintenant travailler sur des projets réels de manière autonome."
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,var(--cyan),var(--blue));">Y</div>
+        <div>
+          <div class="testi-name">Yacine M. <span class="testi-flag">🇩🇿</span></div>
+          <div class="testi-role">Étudiant BTS Géomètre, Oran</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "J'avais peur d'AutoCAD au début. Avec SIDOX, j'ai progressé de zéro à un niveau professionnel. Le support sur Telegram est aussi très réactif, merci !"
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,var(--gold),#e67e22);">S</div>
+        <div>
+          <div class="testi-name">Sara K. <span class="testi-flag">🇲🇦</span></div>
+          <div class="testi-role">Ingénieure topographe, Casablanca</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "Le module Covadis 3D est exceptionnel ! Maintenant je maîtrise les MNT et les profils. Formation très bien structurée et progressive."
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#4caf50,#2e7d32);">K</div>
+        <div>
+          <div class="testi-name">Karim D. <span class="testi-flag">🇹🇳</span></div>
+          <div class="testi-role">Géomètre-expert, Tunis</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "La communauté Telegram est incroyable ! Toutes mes questions reçoivent une réponse rapide. Le contenu est de qualité professionnelle."
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#9c27b0,#673ab7);">M</div>
+        <div>
+          <div class="testi-name">Mohamed O. <span class="testi-flag">🇸🇳</span></div>
+          <div class="testi-role">Technicien BTP, Dakar</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <div class="testi-text">
+        "SIDOX m'a permis de trouver un emploi en bureau d'études. Grâce aux formations AutoCAD et Covadis, j'ai pu passer mon entretien avec confiance !"
+      </div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#e91e63,#c2185b);">F</div>
+        <div>
+          <div class="testi-name">Fatima Z. <span class="testi-flag">🇩🇿</span></div>
+          <div class="testi-role">Dessinatrice projeteur, Constantine</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ════════════════════════════════════════════ -->
+<section id="pricing">
+  <div class="section-header">
+    <div class="section-tag">💳 Tarifs</div>
+    <h2 class="section-title">Des offres pour <span>tous les budgets</span></h2>
+    <p class="section-desc">Choisissez l'offre qui correspond à votre objectif. Paiement sécurisé, accès immédiat.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="pricing-grid">
+
+    <div class="price-card">
+      <div class="plan-name">Essentiel</div>
+      <div class="plan-price">2500 <span>DZD</span></div>
+      <div class="plan-desc">Idéal pour commencer</div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check-circle"></i>Module Introduction (Gratuit)</li>
+        <li><i class="fas fa-check-circle"></i>Formation AutoCAD complète</li>
+        <li><i class="fas fa-check-circle"></i>Fichiers DWG de base</li>
+        <li><i class="fas fa-check-circle"></i>Accès communauté Telegram</li>
+        <li style="opacity:0.3;"><i class="fas fa-times-circle" style="color:#ccc"></i>Covadis 2D & 3D</li>
+        <li style="opacity:0.3;"><i class="fas fa-times-circle" style="color:#ccc"></i>Projets pratiques</li>
+      </ul>
+      <a href="#" class="btn-plan btn-plan-outline">Choisir ce plan</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-badge">⭐ Plus populaire</div>
+      <div class="plan-name">Standard</div>
+      <div class="plan-price">7500 <span>DZD</span></div>
+      <div class="plan-desc">AutoCAD + Covadis 2D & 3D</div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check-circle"></i>Tous les modules (0 à 4)</li>
+        <li><i class="fas fa-check-circle"></i>AutoCAD + Covadis 2D + 3D</li>
+        <li><i class="fas fa-check-circle"></i>50+ fichiers DWG inclus</li>
+        <li><i class="fas fa-check-circle"></i>Support Telegram prioritaire</li>
+        <li><i class="fas fa-check-circle"></i>Projets pratiques réels</li>
+        <li><i class="fas fa-check-circle"></i>Certificat SIDOX</li>
+      </ul>
+      <a href="#" class="btn-plan btn-plan-filled">Choisir ce plan</a>
+    </div>
+
+    <div class="price-card">
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">8900 <span>DZD</span></div>
+      <div class="plan-desc">Accès complet + vie</div>
+      <ul class="plan-features">
+        <li><i class="fas fa-check-circle"></i>Tout le contenu Standard</li>
+        <li><i class="fas fa-check-circle"></i>130+ leçons vidéo HD</li>
+        <li><i class="fas fa-check-circle"></i>Mises à jour gratuites à vie</li>
+        <li><i class="fas fa-check-circle"></i>Support individuel WhatsApp</li>
+        <li><i class="fas fa-check-circle"></i>Études de cas avancées</li>
+        <li><i class="fas fa-check-circle"></i>Accès futur aux nouveaux modules</li>
+      </ul>
+      <a href="#" class="btn-plan btn-plan-outline">Choisir ce plan</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ NEWSLETTER ═════════════════════════════════════════ -->
+<section id="newsletter">
+  <h2 class="nl-title">Commencez <span>GRATUITEMENT</span> dès aujourd'hui</h2>
+  <p class="nl-sub">Inscrivez-vous et accédez immédiatement au Module 0 — Introduction à la Topographie</p>
+  <div class="nl-form">
+    <input type="email" class="nl-input" placeholder="Votre adresse email..." />
+    <button class="nl-btn"><i class="fas fa-paper-plane"></i> &nbsp;S'inscrire</button>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <div class="logo-circle" style="width:42px;height:42px;">
+          <span class="logo-text-inner" style="font-size:12px;">S</span>
+        </div>
+        <div class="footer-brand-name">SID<span>OX</span></div>
+      </div>
+      <p class="footer-tagline">
+        La plateforme de formation en AutoCAD et Covadis pour les topographes débutants et professionnels.
+        Apprenez à votre rythme, avec des exercices du terrain réel. 🇩🇿
+      </p>
+      <div class="footer-social">
+        <a href="https://www.tiktok.com/@d.sidox" target="_blank" class="fsoc fsoc-tt"><i class="fab fa-tiktok"></i></a>
+        <a href="https://solo.to/sidox" target="_blank" class="fsoc fsoc-tg"><i class="fab fa-telegram"></i></a>
+        <a href="#" class="fsoc fsoc-yt"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Formations</h4>
+      <ul class="footer-links">
+        <li><a href="#">Introduction Topographie</a></li>
+        <li><a href="#">AutoCAD Débutant</a></li>
+        <li><a href="#">Covadis 2D</a></li>
+        <li><a href="#">Covadis 3D</a></li>
+        <li><a href="#">Projets VRD</a></li>
+        <li><a href="#">Pack Complet</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Ressources</h4>
+      <ul class="footer-links">
+        <li><a href="#">Blog Topographie</a></li>
+        <li><a href="#">Fichiers DWG Gratuits</a></li>
+        <li><a href="#">Tutoriels Vidéo</a></li>
+        <li><a href="#">Communauté Telegram</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.tiktok.com/@d.sidox"><i class="fab fa-tiktok"></i> @d.sidox</a></li>
+        <li><a href="https://solo.to/sidox"><i class="fas fa-link"></i> solo.to/sidox</a></li>
+        <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
+        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+        <li><a href="#"><i class="fas fa-envelope"></i> Email</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">
+      © 2025 <span>SIDOX</span> — Tous droits réservés. Fait avec ❤️ en <span>🇩🇿 Algérie</span>
+    </div>
+    <div class="footer-flag">🇩🇿</div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Navbar scroll effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(13,27,42,0.99)'
+      : 'rgba(13,27,42,0.97)';
+  });
+
+  // Progress bar animation on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.prog-fill').forEach(bar => {
+          const w = bar.style.width;
+          bar.style.width = '0';
+          setTimeout(() => { bar.style.transition = 'width 1.2s ease'; bar.style.width = w; }, 100);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const hero = document.getElementById('hero');
+  if (hero) observer.observe(hero);
+</script>
+</body>
+</html>
